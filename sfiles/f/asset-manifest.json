@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "./static/css/main.627306c8.css",
+    "main.js": "./static/js/main.eea5c05c.js",
+    "static/js/787.f604716d.chunk.js": "./static/js/787.f604716d.chunk.js",
+    "static/media/car-wheel-white.png": "./static/media/car-wheel-white.589b38f766e901e175a8.png",
+    "static/media/car-wheel.png": "./static/media/car-wheel.d7addec580bd6ad7c6d7.png",
+    "index.html": "./index.html",
+    "main.627306c8.css.map": "./static/css/main.627306c8.css.map",
+    "main.eea5c05c.js.map": "./static/js/main.eea5c05c.js.map",
+    "787.f604716d.chunk.js.map": "./static/js/787.f604716d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.627306c8.css",
+    "static/js/main.eea5c05c.js"
+  ]
+}
