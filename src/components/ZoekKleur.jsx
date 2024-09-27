@@ -123,6 +123,7 @@ function ZoekKleur({ zKPanelModal, toggleZKFlowMod }) {
           left: "25%",
           top: "15%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleZKFlowMod}>
           <strong>Zoek Kleur gegevens</strong>

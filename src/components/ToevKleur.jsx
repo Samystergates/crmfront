@@ -231,6 +231,7 @@ function ToevKleur({
           left: "25%",
           top: "25%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleTKFlowMod} className="modal-header">
           <strong>Toevoegen Kleur</strong>

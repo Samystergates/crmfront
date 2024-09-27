@@ -374,6 +374,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
           left: "17%",
           top: "7%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleSpuFlowMod}>
           <strong>Toevoegen Spuiterij Order</strong>

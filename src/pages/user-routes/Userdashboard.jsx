@@ -31,7 +31,8 @@ const Userdashboard = () => {
     setUser(getCurrentUserDetail());
     loadOrders();
     
-    const socket = new SockJS('http://192.168.100.146:9090/ws');
+    //const socket = new SockJS('http://192.168.100.146:9090/ws');
+    const socket = new SockJS('http://172.22.250.26:9090/ws');
     const stompClient = Stomp.over(socket);
 
     stompClient.connect({}, () => {

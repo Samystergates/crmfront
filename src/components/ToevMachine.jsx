@@ -449,6 +449,16 @@ function ToevMachine({
             borderRadius: "3px",}}
             value={selectedAfdeling}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                document.getElementById('Opmerking').focus();
+              }
+              if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                document.getElementById('MachineMerk').focus();
+              }
+            }}
           />
           <span
             onClick={() => handleDropdownClick("Afdeling")}
@@ -511,6 +521,16 @@ function ToevMachine({
               borderRadius: "3px",}}
               value={selectedMerk}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('Afdeling').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('MachineModel').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("Merk")}
@@ -566,9 +586,20 @@ function ToevMachine({
             <input
               type="text"
               id="MachineModel"
+              tabIndex={1}
               style={inputStyleDiv2}
               value={selectedModel}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('MachineMerk').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('MachineType').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("Model")}
@@ -624,9 +655,20 @@ function ToevMachine({
             <input
               type="text"
               id="MachineType"
+              tabIndex={2}
               style={inputStyleDiv2}
               value={selectedType}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('MachineModel').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('Bandenmaat').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("Type")}
@@ -688,6 +730,16 @@ function ToevMachine({
               borderRadius: "3px",}}
               value={selectedBandenmaat}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('MachineType').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('Velgmaat').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("Bandenmaat")}
@@ -749,6 +801,16 @@ function ToevMachine({
               borderRadius: "3px"}}
               value={selectedVelgmaat}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('Bandenmaat').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('VelgUitvoering').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("Velgmaat")}
@@ -810,6 +872,16 @@ function ToevMachine({
               borderRadius: "3px",}}
               value={selectedVUitvoering}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('Velgmaat').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('VelgNummer').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("VUitvoering")}
@@ -873,6 +945,16 @@ function ToevMachine({
               onChange={(e) =>
                 setEntry({ ...entry, velgnummer: e.target.value })
               }
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('VelgUitvoering').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('VelgLeverancier').focus();
+                }
+              }}
             />
           </div>
           <div style={{ flex: "25%", paddingTop: "2px" }}>
@@ -887,6 +969,16 @@ function ToevMachine({
               onChange={(e) =>
                 setEntry({ ...entry, velgleverancier: e.target.value })
               }
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('VelgNummer').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('Naafgat').focus();
+                }
+              }}
             />
           </div>
         </div>
@@ -905,6 +997,16 @@ function ToevMachine({
                 marginLeft: "95px",
                 border: "1px solid #ccc",
                 borderRadius: "3px",
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('VelgLeverancier').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('Steekcirkel').focus();
+                }
               }}
               value={entry?.naafgat}
               onChange={(e) => setEntry({ ...entry, naafgat: e.target.value })}
@@ -927,6 +1029,16 @@ function ToevMachine({
               borderRadius: "3px",}}
               value={entry?.steek}
               onChange={(e) => setEntry({ ...entry, steek: e.target.value })}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('Naafgat').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('AantalBoutgaten').focus();
+                }
+              }}
             />
             <strong style={{ marginLeft: "5px", fontSize: "14px" }}>
               {" "}
@@ -948,6 +1060,16 @@ function ToevMachine({
                   border: "1px solid #ccc",
                   borderRadius: "3px",
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    document.getElementById('Steekcirkel').focus();
+                  }
+                  if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    document.getElementById('Verdling').focus();
+                  }
+                }}
                 value={entry?.aantalBoutgat}
                 onChange={(e) =>
                   setEntry({ ...entry, aantalBoutgat: e.target.value })
@@ -966,6 +1088,16 @@ function ToevMachine({
                   marginLeft: "69px",
                   border: "1px solid #ccc",
                   borderRadius: "3px",
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    document.getElementById('AantalBoutgaten').focus();
+                  }
+                  if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    document.getElementById('DiameterBoutgat').focus();
+                  }
                 }}
                 value={entry?.verdlingBoutgaten}
                 onChange={(e) =>
@@ -987,6 +1119,16 @@ function ToevMachine({
               borderRadius: "3px",}}
               value={entry?.diameter}
               onChange={(e) => setEntry({ ...entry, diameter: e.target.value })}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('Verdling').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('UitvoeringBoutgat').focus();
+                }
+              }}
             />
             <strong style={{ marginLeft: "5px", fontSize: "14px" }}>
               {" "}
@@ -1006,6 +1148,16 @@ function ToevMachine({
                   marginLeft: "12px",
                   border: "1px solid #ccc",
                   borderRadius: "3px",
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    document.getElementById('DiameterBoutgat').focus();
+                  }
+                  if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    document.getElementById('MaatVerzinking').focus();
+                  }
                 }}
                 value={selectedUBoutgat}
                 onChange={handleChange}
@@ -1070,6 +1222,16 @@ function ToevMachine({
                   border: "1px solid #ccc",
                   borderRadius: "3px",
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    document.getElementById('UitvoeringBoutgat').focus();
+                  }
+                  if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    document.getElementById('ET').focus();
+                  }
+                }}
                 value={entry?.maatVerzinking}
                 onChange={(e) =>
                   setEntry({ ...entry, maatVerzinking: e.target.value })
@@ -1096,6 +1258,16 @@ function ToevMachine({
               border: "1px solid #ccc",
               borderRadius: "3px",}}
               value={entry?.et}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('MaatVerzinking').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('AfstandVoorzijde').focus();
+                }
+              }}
               onChange={(e) => setEntry({ ...entry, et: e.target.value })}
             />
             <strong style={{ marginLeft: "5px", fontSize: "14px" }}>
@@ -1115,6 +1287,16 @@ function ToevMachine({
               border: "1px solid #ccc",
               borderRadius: "3px",}}
               value={entry?.afstandVV}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('ET').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('AfstandAchterzijde').focus();
+                }
+              }}
               onChange={(e) =>
                 setEntry({ ...entry, afstandVV: e.target.value })
               }
@@ -1136,6 +1318,16 @@ function ToevMachine({
               border: "1px solid #ccc",
               borderRadius: "3px",}}
               value={entry?.afstandVA}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('AfstandVoorzijde').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('FlensUitvoering').focus();
+                }
+              }}
               onChange={(e) =>
                 setEntry({ ...entry, afstandVA: e.target.value })
               }
@@ -1158,6 +1350,16 @@ function ToevMachine({
               borderRadius: "3px",}}
               value={selectedFlens}
               onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('AfstandAchterzijde').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('DikteSchijf').focus();
+                }
+              }}
             />
             <span
               onClick={() => handleDropdownClick("Flens")}
@@ -1218,6 +1420,16 @@ function ToevMachine({
               border: "1px solid #ccc",
               borderRadius: "3px",}}
               value={entry?.dikte}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  document.getElementById('FlensUitvoering').focus();
+                }
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  document.getElementById('Opmerking').focus();
+                }
+              }}
               onChange={(e) => setEntry({ ...entry, dikte: e.target.value })}
             />
             <strong style={{ marginLeft: "5px", fontSize: "14px" }}>
@@ -1254,6 +1466,16 @@ function ToevMachine({
               borderRadius: "3px",
               fontSize: "1rem",
               verticalAlign: "top",
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                document.getElementById('DikteSchijf').focus();
+              }
+              if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                document.getElementById('Afdeling').focus();
+              }
             }}
             id="Opmerking"
             value={entry?.opmerking}

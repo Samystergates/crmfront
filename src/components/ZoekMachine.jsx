@@ -121,6 +121,7 @@ function ZoekMachine({ zMPanelModal, toggleZMFlowMod }) {
           left: "25%",
           top: "15%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleZMFlowMod}>
           <strong>Zoek Machine gegevens</strong>

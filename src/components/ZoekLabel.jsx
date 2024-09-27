@@ -105,6 +105,7 @@ function ZoekLabel({ stickers, zLPanelModal, toggleZLFlowMod ,loadAllOrdersStick
           left: "25%",
           top: "15%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleZLFlowMod}>
           <strong>Zoek Label gegevens</strong>

@@ -156,6 +156,7 @@ console.log('entry stricker',entry);
           left: "20%",
           top: "22%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleTLFlowMod} className="modal-header">
           <strong>Toevoegen Label</strong>

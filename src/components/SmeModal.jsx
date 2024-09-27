@@ -298,6 +298,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
           left: "17%",
           top: "7%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleSmeFlowMod}>
           <strong>Toevoegen Smederij Order</strong>
@@ -1082,6 +1083,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
           left: "20%",
           top: "20%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleModal}>
           <strong>Select Model</strong>

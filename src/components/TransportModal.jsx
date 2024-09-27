@@ -191,7 +191,7 @@ function TransportModal({
         traOrders?.filter((item) =>
           item?.orderNumber
             ?.toLowerCase()
-            ?.startsWith(searchTerm?.toLowerCase())
+            ?.includes(searchTerm?.toLowerCase())
         )
       );
     }
@@ -624,6 +624,7 @@ function TransportModal({
           left: "17%",
           top: "7%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleTraFlowMod}>
           <strong>Toevoegen Transport Order</strong>
@@ -994,6 +995,7 @@ function TransportModal({
           left: "30%",
           top: "25%",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader toggle={toggleModal}>
           <strong>Saved Orders For Routes</strong>
