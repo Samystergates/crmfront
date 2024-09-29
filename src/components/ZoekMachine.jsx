@@ -161,7 +161,7 @@ function ZoekMachine({ zMPanelModal, toggleZMFlowMod }) {
                 <th style={thStyle}>Type</th>
                 <th style={thStyle}>Bandenmaat</th>
                 <th style={thStyle}>Velgmaat</th>
-                <th style={thStyle}>Veltype</th>
+                <th style={thStyle}>Velgtype</th>
               </tr>
             </thead>
             <tbody>
