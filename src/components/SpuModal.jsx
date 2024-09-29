@@ -125,6 +125,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
         })
         .catch((error) => {
           console.log("Error in loadSpu:", error);
+          setStartOrFinish(false);
         });
     }
   }

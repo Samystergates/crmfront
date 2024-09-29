@@ -103,6 +103,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         })
         .catch((error) => {
           console.log(error);
+          setStartOrFinish(false);
         });
     }
   }
