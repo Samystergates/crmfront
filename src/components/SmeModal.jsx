@@ -47,7 +47,6 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
   }, [startOrFinish]);
 
   useEffect(() => {
-    console.log("useeffect3", currSme);
     if (currSme) {
       setEntry({
         ...entry,
@@ -306,9 +305,11 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         </ModalHeader>
         <ModalBody>
           <section>
-            <h5>OrderData</h5>
+          <h5 style={{ textDecoration: 'underline' }}>
+  OrderData - DM241{currSme?.id}
+</h5>
 
-            <div className="container">
+            <div className="container" style={{marginTop:"16px"}}>
               <div className="row">
                 <div className="col-md-3">
                   <p style={{ fontSize: "1rem" }}>
