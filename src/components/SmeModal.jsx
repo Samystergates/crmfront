@@ -83,7 +83,6 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
 
   function loadOrderSme() {
     
-    console.log("enlo1");
     if (entry) {
       loadSme(entry)
         .then((data) => {
@@ -94,7 +93,6 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
           setSelectedKoelgaten(data?.koelgaten);
           setSelectedWisselsysteem(data?.wisselsysteem);
           if (data.id !== 0) {
-            console.log("enlo");
             setStartOrFinish(true);
           }else {
             setStartOrFinish(false);
@@ -306,7 +304,8 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         <ModalBody>
           <section>
           <h5 style={{ textDecoration: 'underline' }}>
-  OrderData - DM241{currSme?.id}
+          {loadedEntry}
+    OrderData {startOrFinish && `- DM241${entry?.id}`}
 </h5>
 
             <div className="container" style={{marginTop:"16px"}}>
