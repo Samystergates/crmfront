@@ -9,6 +9,7 @@ import { doLogout } from "../../auth";
 import { loadAllOrders } from "../../services/order-service";
 import { loadCRMOrders } from "../../services/order-service";
 import { ClipLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import SockJS from 'sockjs-client';
 import Stomp from 'webstomp-client';
@@ -21,7 +22,7 @@ const Userdashboard = () => {
 
   const [user, setUser] = useState({});
   const [orders, setOrders] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setUser(getCurrentUserDetail());
     loadOrders();
@@ -39,6 +40,10 @@ const Userdashboard = () => {
       stompClient.subscribe("/topic/orderUpdate", (message) => {
         const updatedOrders = JSON.parse(message.body);
         setOrders(updatedOrders);
+      });
+      stompClient.subscribe("/topic/jwtExc", (message) => {
+        doLogout();
+        navigate('/app/login');
       });
     });
 

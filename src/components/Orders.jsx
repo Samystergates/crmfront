@@ -23,7 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { getCurrentUserDetail, isLoggedIn } from "../auth";
 import { updateOrders, updateOrdersColors } from "../services/order-service";
-import { loadAllStickers, printingStickerPdf } from "../services/print-service";
+import { loadAllStickers, printingMonPdf, printingStickerPdf } from "../services/print-service";
 import "../css/ordersStyle.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
@@ -62,6 +62,12 @@ function Orders({
   const [colorStateTra, setColorStateTra] = useState("D");
   const [colorStateExp, setColorStateExp] = useState("D");
   const [colorStateExc, setColorStateExc] = useState("D");
+  const [filterStateOrderNum, setFilterStateOrderNum] = useState("Asc");
+  const [filterStateGebruiker, setFilterStateGebruiker] = useState("Asc");
+  const [filterStateLeverdatum, setFilterStateLeverdatum] = useState("Asc");
+  const [filterStateLand, setFilterStateLand] = useState("Asc");
+  const [filterStatePlaats, setFilterStatePlaats] = useState("Asc");
+  const [filterStateNaam, setFilterStateNaam] = useState("Asc");
   const [spuPanelModal, setSpuPanelModal] = useState(false);
   const [smePanelModal, setSmePanelModal] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -190,7 +196,6 @@ function Orders({
 
   const handleFilterClick = (dep, colorState) => {
     let filteredData;
-    console.log(dep, colorState);
     switch (dep) {
       case "SME":
         filteredData = orderX.filter(item =>
@@ -201,7 +206,7 @@ function Orders({
             (colorState === "green" && item?.sme === "G") ||
             (colorState === "blue" && item?.sme === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateSme("ND");
 
           setColorStateSpu("D");
@@ -212,20 +217,23 @@ function Orders({
           setColorStateTra("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateSme("D");
         }
         break;
       case "SPU":
+        console.log("working su", colorState);
+        console.log("orderX:", orderX);
+
         filteredData = orderX.filter(item =>
-          item?.spu !== "" &&
+          item?.spu !== "" && item?.spu !== undefined &&
           item?.spu !== null &&
           ((colorState === "red" && item?.spu === "R") ||
             (colorState === "yellow" && item?.spu === "Y") ||
             (colorState === "green" && item?.spu === "G") ||
             (colorState === "blue" && item?.spu === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateSpu("ND");
 
           setColorStateSme("D");
@@ -236,20 +244,22 @@ function Orders({
           setColorStateTra("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateSpu("D");
         }
+        console.log("Filtered SPU Data:", filteredData);
+
         break;
       case "MONLB":
         filteredData = orderX.filter(item =>
-          item?.monLb !== "" &&
+          item?.monLb !== "" && item?.monLb !== undefined &&
           item?.monLb !== null &&
           ((colorState === "red" && item?.monLb === "R") ||
             (colorState === "yellow" && item?.monLb === "Y") ||
             (colorState === "green" && item?.monLb === "G") ||
             (colorState === "blue" && item?.monLb === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateMLb("ND");
 
           setColorStateSme("D");
@@ -260,7 +270,7 @@ function Orders({
           setColorStateTra("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateMLb("D");
         }
         break;
@@ -273,7 +283,7 @@ function Orders({
             (colorState === "green" && item?.monTr === "G") ||
             (colorState === "blue" && item?.monTr === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateMTr("ND");
 
           setColorStateSme("D");
@@ -284,7 +294,7 @@ function Orders({
           setColorStateTra("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateMTr("D");
         }
         break;
@@ -297,7 +307,7 @@ function Orders({
             (colorState === "green" && item?.mwe === "G") ||
             (colorState === "blue" && item?.mwe === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateMwe("ND");
 
           setColorStateSme("D");
@@ -308,7 +318,7 @@ function Orders({
           setColorStateTra("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateMwe("D");
         }
         break;
@@ -321,7 +331,7 @@ function Orders({
             (colorState === "green" && item?.ser === "G") ||
             (colorState === "blue" && item?.ser === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateSer("ND");
 
           setColorStateSme("D");
@@ -332,7 +342,7 @@ function Orders({
           setColorStateTra("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           console.log("cpoming in ")
           setColorStateSer("D");
         }
@@ -346,7 +356,7 @@ function Orders({
             (colorState === "green" && item?.tra === "G") ||
             (colorState === "blue" && item?.tra === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateTra("ND");
 
           setColorStateSme("D");
@@ -357,7 +367,7 @@ function Orders({
           setColorStateMwe("D");
           setColorStateExp("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateTra("D");
         }
         break;
@@ -370,7 +380,7 @@ function Orders({
             (colorState === "green" && item?.exp === "G") ||
             (colorState === "blue" && item?.exp === "B"))
         );
-        if(colorState !== "D"){
+        if (colorState !== "D") {
           setColorStateExp("ND");
 
           setColorStateSme("D");
@@ -381,7 +391,7 @@ function Orders({
           setColorStateMwe("D");
           setColorStateTra("D");
           setColorStateExc("D");
-        }else{
+        } else {
           setColorStateExp("D");
         }
         break;
@@ -389,29 +399,103 @@ function Orders({
         filteredData = orderX.filter(item =>
           item?.exclamation === "JA"
         );
-          setColorStateExc("ND");
+        setColorStateExc("ND");
 
-          setColorStateSme("D");
-          setColorStateSpu("D");
-          setColorStateMTr("D");
-          setColorStateMLb("D");
-          setColorStateSer("D");
-          setColorStateMwe("D");
-          setColorStateTra("D");
-          setColorStateExp("D");
+        setColorStateSme("D");
+        setColorStateSpu("D");
+        setColorStateMTr("D");
+        setColorStateMLb("D");
+        setColorStateSer("D");
+        setColorStateMwe("D");
+        setColorStateTra("D");
+        setColorStateExp("D");
         break;
-        case "D":
-          filteredData = orderX;
-            setColorStateSme("D");
-            setColorStateSpu("D");
-            setColorStateMTr("D");
-            setColorStateMLb("D");
-            setColorStateSer("D");
-            setColorStateMwe("D");
-            setColorStateTra("D");
-            setColorStateExp("D");
-            setColorStateExc("D");
-          break;
+      case "Naam":
+        filteredData = [...orderX].sort(filterStateNaam === 'Asc'
+          ? (a, b) => a.customerName.localeCompare(b.customerName)
+          : (a, b) => b.customerName.localeCompare(a.customerName)
+        );
+        if (filterStateNaam === 'Asc') {
+          setFilterStateNaam("Dsc");
+        }
+        if (filterStateNaam === 'Dsc') {
+          setFilterStateNaam("Asc");
+        }
+        break;
+      case "Verkooporder":
+        filteredData = [...orderX].sort(filterStateOrderNum === 'Asc'
+          ? (a, b) => a.orderNumber.localeCompare(b.orderNumber)
+          : (a, b) => b.orderNumber.localeCompare(a.orderNumber)
+        );
+        if (filterStateOrderNum === 'Asc') {
+          setFilterStateOrderNum("Dsc");
+        }
+        if (filterStateOrderNum === 'Dsc') {
+          setFilterStateOrderNum("Asc");
+        }
+        break;
+      case "Plaats":
+        console.log(orderX);
+        filteredData = [...orderX].sort(filterStatePlaats === 'Asc'
+          ? (a, b) => a.city.localeCompare(b.city)
+          : (a, b) => b.city.localeCompare(a.city)
+        );
+        console.log(filteredData);
+        if (filterStatePlaats === 'Asc') {
+          setFilterStatePlaats("Dsc");
+        }
+        if (filterStatePlaats === 'Dsc') {
+          setFilterStatePlaats("Asc");
+        }
+        break;
+      case "Land":
+        filteredData = [...orderX].sort(filterStateLand === 'Asc'
+          ? (a, b) => a.country.localeCompare(b.country)
+          : (a, b) => b.country.localeCompare(a.country)
+        );
+        if (filterStateLand === 'Asc') {
+          setFilterStateLand("Dsc");
+        }
+        if (filterStateLand === 'Dsc') {
+          setFilterStateLand("Asc");
+        }
+        break;
+      case "Leverdatum":
+        filteredData = [...orderX].sort(filterStateLeverdatum === 'Asc'
+          ? (a, b) => new Date(a.deliveryDate) - new Date(b.deliveryDate)
+          : (a, b) => new Date(b.deliveryDate) - new Date(a.deliveryDate)
+        );
+        if (filterStateLeverdatum === 'Asc') {
+          setFilterStateLeverdatum("Dsc");
+        }
+        if (filterStateLeverdatum === 'Dsc') {
+          setFilterStateLeverdatum("Asc");
+        }
+        break;
+      case "Gebruiker":
+        filteredData = [...orderX].sort(filterStateGebruiker === 'Asc'
+          ? (a, b) => a.verifierUser.localeCompare(b.verifierUser)
+          : (a, b) => b.verifierUser.localeCompare(a.verifierUser)
+        );
+        if (filterStateGebruiker === 'Asc') {
+          setFilterStateGebruiker("Dsc");
+        }
+        if (filterStateGebruiker === 'Dsc') {
+          setFilterStateGebruiker("Asc");
+        }
+        break;
+      case "D":
+        filteredData = orderX;
+        setColorStateSme("D");
+        setColorStateSpu("D");
+        setColorStateMTr("D");
+        setColorStateMLb("D");
+        setColorStateSer("D");
+        setColorStateMwe("D");
+        setColorStateTra("D");
+        setColorStateExp("D");
+        setColorStateExc("D");
+        break;
       default:
         filteredData = orderX;
         break;
@@ -420,11 +504,22 @@ function Orders({
     const orderNumbersToFilter = filteredData
       .filter(item => item?.orderNumber)
       .map(item => item.orderNumber);
+    if (dep === "Naam" || dep === "Plaats" || dep === "Land" || dep === "Leverdatum" || dep === "Gebruiker") {
+      const filteredAndParentItems = filteredData.filter(item =>
+        orderNumbersToFilter.includes(item.orderNumber) && item.isParent === 1
+      );
 
-    const filteredAndParentItems = order.filter(item =>
-      orderNumbersToFilter.includes(item.orderNumber) && item.isParent === 1
-    );
-    setFilteredOrder(filteredAndParentItems);
+      setFilteredOrder(filteredAndParentItems);
+    }
+    else {
+      console.log("else");
+      console.log(orderNumbersToFilter);
+      const filteredAndParentItems = order.filter(item =>
+        orderNumbersToFilter.includes(item.orderNumber) && item.isParent === 1
+      );
+
+      setFilteredOrder(filteredAndParentItems);
+    }
   };
 
   const updatingOrdersBO = (flowUpdate, orderDto) => {
@@ -465,8 +560,8 @@ function Orders({
       });
   };
 
-  const updatingOrdersColorMain = (orderNumber, orderDep, orderStatus, flowVal,dep) => {
-    console.log(orderNumber, orderDep, orderStatus, flowVal,dep);
+  const updatingOrdersColorMain = (orderNumber, orderDep, orderStatus, flowVal, dep) => {
+    console.log(orderNumber, orderDep, orderStatus, flowVal, dep);
     updateOrdersColors(orderNumber, orderDep, orderStatus, flowVal)
       .then((data) => {
         if (data.length > 0) {
@@ -478,8 +573,8 @@ function Orders({
             setOrderX(data);
             toast.success("Successfully Updated");
 
-            if(dep === "MONLB" && orderStatus === "R" && flowVal === "FWD"){
-                printMonExp(orderNumber);
+            if (dep === "MONLB" && orderStatus === "R" && flowVal === "FWD") {
+              printMonExp(orderNumber);
             }
 
             return true;
@@ -515,9 +610,9 @@ function Orders({
             setOrderX(data);
             toast.success("Successfully Updated");
 
-            if(dep === "MON"){
+            if (dep === "MON") {
               console.log("mon k lye ", orderDto);
-              if(orderDto.mon === "Y"){
+              if (orderDto.mon === "Y") {
                 printMonExp(orderDto.orderNumber);
               }
             }
@@ -1335,6 +1430,41 @@ function Orders({
           </>
         );
       }
+      if (dep === "MONLB") {
+        return (
+          <>
+            <DropdownItem
+              className="DropDown-Size"
+              onClick={() =>
+                initToggleFlow(key, oId, dep, statusCode, flowReverse.current)
+              }
+            >
+              <li style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}>
+                Mark {dep} Available
+              </li>
+            </DropdownItem>
+          </>
+        );
+      }
+
+
+      if (dep === "MONLB-PRINT") {
+        const orderNumberMonPrint = key.split(",")[0];
+        return (
+          <>
+            <DropdownItem
+              className="DropDown-Size"
+              onClick={() =>
+                printMonExp(orderNumberMonPrint)
+              }
+            >
+              <li style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}>
+                {dep}
+              </li>
+            </DropdownItem>
+          </>
+        );
+      }
     }
     return null;
   };
@@ -1345,15 +1475,20 @@ function Orders({
         <thead>
           <tr>
             <th></th>
-            <th>Verkooporder</th>
+            <th onClick={() => handleFilterClick("Verkooporder")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Verkooporder</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStateOrderNum === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
             <th>Ordersoort</th>
             <th>Backorder</th>
             <th style={{ overflow: "hidden" }}>
               <Dropdown isOpen={smeDropDownOpen} toggle={toggleSmeDropDown}>
-              <DropdownToggle data-toggle="dropdown" tag="span">
+                <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>SME</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateSme === "D" ? 'black' : '#7E8D85' }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateSme === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1392,10 +1527,10 @@ function Orders({
             </th>
             <th style={{ overflow: "hidden" }}>
               <Dropdown isOpen={spuDropDownOpen} toggle={toggleSpuDropDown}>
-              <DropdownToggle data-toggle="dropdown" tag="span">
+                <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>SPU</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateSpu === "D" ? 'black' : '#7E8D85'  }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateSpu === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1437,7 +1572,7 @@ function Orders({
                 <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>MON LB</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateMLb === "D" ? 'black' : '#7E8D85' }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateMLb === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1479,7 +1614,7 @@ function Orders({
                 <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>MON TR</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateMTr === "D" ? 'black' : '#7E8D85' }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateMTr === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1521,7 +1656,7 @@ function Orders({
                 <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>MWE</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateMwe === "D" ? 'black' : '#7E8D85' }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateMwe === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1563,7 +1698,7 @@ function Orders({
                 <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>SER</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateSer === "D" ? 'black' : '#7E8D85' }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateSer === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1605,7 +1740,7 @@ function Orders({
                 <DropdownToggle data-toggle="dropdown" tag="span">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span>TRA</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateTra === "D" ? 'black' : '#7E8D85' }} />
+                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateTra === "D" ? 'black' : '#7E8D85' }} />
                   </div>
                 </DropdownToggle>
                 <DropdownMenu
@@ -1685,16 +1820,16 @@ function Orders({
               </Dropdown>
             </th>
             <th onClick={() => handleFilterClick("EXC")}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <span>!</span>
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' , color: colorStateExc === "D" ? 'black' : '#7E8D85' }} />
-                  </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>!</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: colorStateExc === "D" ? 'black' : '#7E8D85' }} />
+              </div>
             </th>
             <th style={{ overflow: "hidden" }}>
               <Dropdown isOpen={dropDownOpen} toggle={toggleDropDown}>
-                  <DropdownToggle data-toggle="dropdown" tag="span">
-                    Gebruiker (I)
-                    <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' }} />
+                <DropdownToggle data-toggle="dropdown" tag="span">
+                  Gebruiker (I)
+                  <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px' }} />
                 </DropdownToggle>
                 <DropdownMenu
                   container="body"
@@ -1741,14 +1876,39 @@ function Orders({
               </Dropdown>
             </th>
             <th>Organisatie</th>
-            <th>Naam</th>
+            <th onClick={() => handleFilterClick("Naam")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Naam</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStateNaam === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
             <th>Postcode</th>
-            <th>Plaats</th>
-            <th>Land</th>
-            <th>Leverdatum</th>
+            <th onClick={() => handleFilterClick("Plaats")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Plaats</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStatePlaats === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
+            <th onClick={() => handleFilterClick("Land")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Land</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStateLand === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
+            <th onClick={() => handleFilterClick("Leverdatum")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Leverdatum</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStateLeverdatum === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
             <th>Referentie</th>
             <th>Datum order</th>
-            <th>Gebruiker (L)</th>
+            <th onClick={() => handleFilterClick("Gebruiker")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Gebruiker (L)</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStateGebruiker === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -1997,6 +2157,17 @@ function Orders({
                                 item.orderNumber,
                                 `${item.orderNumber},${item.product}`,
                                 item.ser
+                              )}
+                            </>
+                          )}
+                          {(item.orderType === "MSP" || "MLP" || "MAP" || "MSO" || "MAO" || "MLO") && (
+                            <>
+                              {renderDropdownItems(
+                                "MONLB-PRINT",
+                                item.id,
+                                item.orderNumber,
+                                `${item.orderNumber},${item.product}`,
+                                item.mwe
                               )}
                             </>
                           )}

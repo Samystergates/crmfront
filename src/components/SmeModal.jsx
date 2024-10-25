@@ -81,6 +81,12 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
     }
   }, [selectedRowId]);
 
+  window.onerror = function (message, source, lineno, colno, error) {
+    console.error("Global error caught:", message, source, lineno, colno, error);
+    // Handle the error, such as logging to a service or showing a notification
+  };
+
+  
   function loadOrderSme() {
     
     if (entry) {
@@ -106,10 +112,10 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
   }
 
   function saveOrderSme() {
-    if (!entry?.merk) {
-      toast.error("merk required");
-      return;
-    }
+    // if (!entry?.merk) {
+    //   toast.error("merk required");
+    //   return;
+    // }
     saveSme(entry)
       .then((data) => {
         setEntry(data);
@@ -158,6 +164,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         .then((data) => {
           setStartOrFinish(false);
           toggleFlow("", currSme?.id, "SME", currSme?.sme, "RVS");
+          clearData();
           toast.success("Removed Successfully");
         })
         .catch((error) => {

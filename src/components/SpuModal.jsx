@@ -203,6 +203,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
 
           setStartOrFinish(false);
           toggleFlow("", currSpu?.id, "SPU", currSpu?.spu, "RVS");
+          clearData();
         })
         .catch((error) => {
           console.log(error);
