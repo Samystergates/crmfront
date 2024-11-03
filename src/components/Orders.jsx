@@ -574,7 +574,7 @@ function Orders({
             toast.success("Successfully Updated");
 
             if (dep === "MONLB" && orderStatus === "R" && flowVal === "FWD") {
-              printMonExp(orderNumber);
+              //printMonExp(orderNumber);
             }
 
             return true;
@@ -597,7 +597,6 @@ function Orders({
   };
 
   const updatingOrdersColor = (flowUpdate, orderDto, dep) => {
-    console.log("fyhy");
     updateOrders(flowUpdate, orderDto)
       .then((data) => {
         if (data.length > 0) {
@@ -611,9 +610,8 @@ function Orders({
             toast.success("Successfully Updated");
 
             if (dep === "MON") {
-              console.log("mon k lye ", orderDto);
               if (orderDto.mon === "Y") {
-                printMonExp(orderDto.orderNumber);
+                //printMonExp(orderDto.orderNumber);
               }
             }
 

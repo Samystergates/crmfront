@@ -109,7 +109,7 @@ const Login = () => {
                 backgroundColor: '#d6d6d6'
                 }}>
               <CardHeader>
-                <h3 className="text-center">InLoggen</h3>
+                <h3 className="text-center">Inloggen</h3>
               </CardHeader>
 
               <CardBody>
