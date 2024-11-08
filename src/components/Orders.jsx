@@ -14,7 +14,7 @@ import {
   DropdownMenu,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { printMonExp } from "./PrintUtil";
+import { printMonExp, printSmeExp, printSpuExp } from "./PrintUtil";
 import {
   faFilter,
   faAdd,
@@ -1293,6 +1293,37 @@ function Orders({
                 </li>
               )}
             </DropdownItem>
+            {dep === "SME" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSmeExp(key)
+                }
+              >
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Smederij
+                </li>
+
+              </DropdownItem>
+            )}
+                        {dep === "SPU" && (
+            <DropdownItem
+              className="DropDown-Size"
+              onClick={() =>
+                printSpuExp(key)
+              }
+            >
+              
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Spuiterij
+                </li>
+              
+            </DropdownItem>
+            )}
           </>
         );
       }
@@ -1355,6 +1386,37 @@ function Orders({
                 </li>
               )}
             </DropdownItem>
+            {dep === "SME" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSmeExp(key)
+                }
+              >
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Smederij
+                </li>
+
+              </DropdownItem>
+            )}
+            {dep === "SPU" && (
+            <DropdownItem
+              className="DropDown-Size"
+              onClick={() =>
+                printSpuExp(key)
+              }
+            >
+              
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Spuiterij
+                </li>
+              
+            </DropdownItem>
+            )}
           </>
         );
       }
@@ -1389,6 +1451,36 @@ function Orders({
                 </li>
               )}
             </DropdownItem>
+            {dep === "SME" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSmeExp(key)
+                }
+              >
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Smederij
+                </li>
+
+              </DropdownItem>
+            )}
+            {dep === "SPU" && (
+            <DropdownItem
+              className="DropDown-Size"
+              onClick={() =>
+                printSpuExp(key)
+              }
+            >
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Spuiterij
+                </li>
+              
+            </DropdownItem>
+            )}
           </>
         );
       }
@@ -1409,6 +1501,37 @@ function Orders({
                 Completed {dep}
               </li>
             </DropdownItem>
+            {dep === "SME" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSmeExp(key)
+                }
+              >
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Smederij
+                </li>
+
+              </DropdownItem>
+            )}
+            {dep === "SPU" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSpuExp(key)
+                }
+              >
+
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Spuiterij
+                </li>
+
+              </DropdownItem>
+            )}
           </>
         );
       }
@@ -1425,9 +1548,41 @@ function Orders({
                 Mark {dep} Available
               </li>
             </DropdownItem>
+            {dep === "SME" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSmeExp(key)
+                }
+              >
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Smederij
+                </li>
+
+              </DropdownItem>
+            )}
+            {dep === "SPU" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSpuExp(key)
+                }
+              >
+
+                <li
+                  style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
+                >
+                  Print Spuiterij
+                </li>
+
+              </DropdownItem>
+            )}
           </>
         );
       }
+
       if (dep === "MONLB") {
         return (
           <>
@@ -2429,6 +2584,7 @@ function Orders({
                                             `${itemC.orderNumber},${itemC.product}`,
                                             itemC?.spu
                                           )}
+
                                           {stickers.some(
                                             (item) =>
                                               item.product === itemC.product
