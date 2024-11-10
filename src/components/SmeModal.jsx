@@ -34,8 +34,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
   const [selectedWisselsysteem, setSelectedWisselsysteem] = useState("");
 
   useEffect(() => {
-    
-    console.log("useeffect1", currSme);
+
     setUser(getCurrentUserDetail());
     setLogin(isLoggedIn());
     loadMachineSizes();
@@ -43,7 +42,6 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
 
   useEffect(() => {
 
-    console.log("called s or f", startOrFinish);
   }, [startOrFinish]);
 
   useEffect(() => {
@@ -59,8 +57,8 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
 
   useEffect(() => {
 
-      loadOrderSme();
-  
+    loadOrderSme();
+
   }, [loadedEntry]);
 
   useEffect(() => {
@@ -86,9 +84,9 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
     // Handle the error, such as logging to a service or showing a notification
   };
 
-  
+
   function loadOrderSme() {
-    
+
     if (entry) {
       loadSme(entry)
         .then((data) => {
@@ -100,7 +98,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
           setSelectedWisselsysteem(data?.wisselsysteem);
           if (data.id !== 0) {
             setStartOrFinish(true);
-          }else {
+          } else {
             setStartOrFinish(false);
           }
         })
@@ -126,7 +124,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         setSelectedWisselsysteem(data?.wisselsysteem);
         toast.success("Saved Successfully");
         flowMove("R");
-        
+
         printSmeExp(`${entry?.orderNumber},${entry?.prodNumber}`);
         setStartOrFinish(true);
       })
@@ -310,12 +308,12 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         </ModalHeader>
         <ModalBody>
           <section>
-          <h5 style={{ textDecoration: 'underline' }}>
-          {loadedEntry}
-    OrderData {startOrFinish && `- DM241${entry?.id}`}
-</h5>
+            <h5 style={{ textDecoration: 'underline' }}>
+              {loadedEntry}
+              OrderData {startOrFinish && `- DM241${entry?.id}`}
+            </h5>
 
-            <div className="container" style={{marginTop:"16px"}}>
+            <div className="container" style={{ marginTop: "16px" }}>
               <div className="row">
                 <div className="col-md-3">
                   <p style={{ fontSize: "1rem" }}>
@@ -602,10 +600,10 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
                   >
                     <strong>Uitvoering boutgat:</strong>
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="field2"
                     style={{
+                      width:"150px",
                       maxWidth: "150px",
                       fontSize: "0.8rem",
                       marginLeft: "8px",
@@ -614,7 +612,13 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
                     onChange={(e) =>
                       setEntry({ ...entry, typeBoutgat: e.target.value })
                     }
-                  />
+                  >
+                    <option value=""></option>
+                    <option value="VLAK">VLAK</option>
+                    <option value="1xVZ">1xVZ</option>
+                    <option value="2xVZ">2xVZ</option>
+                    {/* Add more options as needed */}
+                  </select>
                 </div>
 
                 <div
@@ -986,18 +990,22 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
                     </label>
                     <select
                       style={{
-                        width: "20%",
+                        width: "30%",
                         border: "1px solid #ccc",
                         outline: "none",
                         background: "white",
                         padding: "5px",
                         borderRadius: "3px",
                       }}
+                      value={entry?.optionVentielbeschermer}
+                    onChange={(e) =>
+                      setEntry({ ...entry, optionVentielbeschermer: e.target.value })
+                    }
                     >
-                      <option value="" disabled></option>
-                      <option value="option1"></option>
-                      <option value="option2"></option>
-                      <option value="option3"></option>
+                      <option value=""></option>
+                      <option value="BEUGEL">BEUGEL</option>
+                      <option value="GASDOP">GASDOP</option>
+                      <option value="HALVE MAAN">HALVE MAAN</option>
                     </select>
                   </div>
                   <div>

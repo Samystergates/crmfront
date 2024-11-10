@@ -246,11 +246,11 @@ function ToevKleur({
                 type="text"
                 id="field1"
                 style={{ width: "60%" }}
-                onKeyPress={(e) => {
-                  if (!/[0-9\b]/.test(e.key)) {
-                    e.preventDefault();
-                  }
-                }}
+                // onKeyPress={(e) => {
+                //   if (!/[0-9\b]/.test(e.key)) {
+                //     e.preventDefault();
+                //   }
+                // }}
                 value={entry?.id || ""}
                 onChange={(e) => setEntry({ ...entry, id: e.target.value })}
                 readOnly={isWijzigen}

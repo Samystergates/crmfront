@@ -2313,7 +2313,7 @@ function Orders({
                               )}
                             </>
                           )}
-                          {(item.orderType === "MSP" || "MLP" || "MAP" || "MSO" || "MAO" || "MLO") && (
+                          {(item.orderType === "MSP" || item.orderType === "MLP" || item.orderType === "MAP" || item.orderType === "MSO" || item.orderType === "MAO" || item.orderType === "MLO") && (
                             <>
                               {renderDropdownItems(
                                 "MONLB-PRINT",

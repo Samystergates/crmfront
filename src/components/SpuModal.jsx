@@ -853,7 +853,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
                         }}
                         onChange={(e) => {
                           const selectedObject = wheelColor.find(
-                            (color) => color.id === parseInt(e.target.value)
+                            (color) => color.id === e.target.value
                           );
                           setColorEntry(selectedObject);
                           setFinalEntry((prevFinalEntry) => ({
@@ -906,7 +906,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
                         }}
                         onChange={(e) => {
                           const selectedObject = wheelColor.find(
-                            (color) => color.id === parseInt(e.target.value)
+                            (color) => color.id === e.target.value
                           );
                           setColorEntry(selectedObject);
                           setFinalEntry((prevFinalEntry) => ({
