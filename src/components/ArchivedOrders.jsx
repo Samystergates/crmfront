@@ -27,7 +27,28 @@ import '../css/ordersStyle.css'
     const [sortedOrder, setSortedOrder] = useState(order);
     const [dropDownOpen, setDropdownOpen] = useState(false);
 
-   
+    const [currentPage, setCurrentPage] = useState(1);
+    const entriesPerPage = 200;
+
+    const totalPages = Math.ceil(filteredOrder.length / entriesPerPage);
+
+
+    const paginatedOrders = filteredOrder.slice(
+      (currentPage - 1) * entriesPerPage,
+      currentPage * entriesPerPage
+    );
+  
+    const handleNextPage = () => {
+      if (currentPage * entriesPerPage < filteredOrder.length) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+    
+    const handlePreviousPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
 
     useEffect(() => {
       setUser(getCurrentUserDetail())
@@ -232,7 +253,7 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-        {filteredOrder
+        {paginatedOrders
             ?.filter((item) => item.isParent === 1)
             .map((item, index) => (
               <React.Fragment key={`${item.id},${index}`}>
@@ -371,6 +392,13 @@ useEffect(() => {
             ))}
           </tbody>
       </table>
+
+      <div className="pagination-controls">
+        <Button disabled={currentPage === 1} onClick={handlePreviousPage}>Previous</Button>
+        <span> - </span><span>Page {currentPage}</span><span> - </span>
+        <Button disabled={currentPage * entriesPerPage >= filteredOrder.length} onClick={handleNextPage}>Next</Button>
+      </div>
+
       <Modal isOpen={modal} toggle={toggle}>
         <ModalBody style={{justifyContent: 'center'}}>
           Change Back Office Status for Order {itsOdanum}

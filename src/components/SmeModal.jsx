@@ -125,7 +125,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
         toast.success("Saved Successfully");
         flowMove("R");
 
-        printSmeExp(`${entry?.orderNumber},${entry?.prodNumber}`);
+        //printSmeExp(`${entry?.orderNumber},${entry?.prodNumber}`);
         setStartOrFinish(true);
       })
       .catch((error) => {

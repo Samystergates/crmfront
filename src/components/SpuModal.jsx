@@ -159,7 +159,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
         setStartOrFinish(true);
         toast.success("Saved Successfully");
 
-        printSpuExp(`${finalEntry?.orderNumber},${finalEntry?.prodNumber}`);
+        //printSpuExp(`${finalEntry?.orderNumber},${finalEntry?.prodNumber}`);
       })
       .catch((error) => {
         console.log(error);

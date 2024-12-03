@@ -63,8 +63,10 @@ function Orders({
   const [colorStateExp, setColorStateExp] = useState("D");
   const [colorStateExc, setColorStateExc] = useState("D");
   const [filterStateOrderNum, setFilterStateOrderNum] = useState("Asc");
+  const [filterStateBackorder, setFilterStateBackorder] = useState("Asc");
   const [filterStateGebruiker, setFilterStateGebruiker] = useState("Asc");
   const [filterStateLeverdatum, setFilterStateLeverdatum] = useState("Asc");
+  const [filterDatumOrder, setfilterDatumOrder] = useState("Asc");
   const [filterStateLand, setFilterStateLand] = useState("Asc");
   const [filterStatePlaats, setFilterStatePlaats] = useState("Asc");
   const [filterStateNaam, setFilterStateNaam] = useState("Asc");
@@ -233,6 +235,8 @@ function Orders({
             (colorState === "green" && item?.spu === "G") ||
             (colorState === "blue" && item?.spu === "B"))
         );
+        console.log("ok now")
+        console.log(filteredData);
         if (colorState !== "D") {
           setColorStateSpu("ND");
 
@@ -422,6 +426,18 @@ function Orders({
           setFilterStateNaam("Asc");
         }
         break;
+        case "Backorder":
+          filteredData = [...orderX].sort(filterStateBackorder === 'Asc'
+            ? (a, b) => a.backOrder.localeCompare(b.backOrder)
+            : (a, b) => b.backOrder.localeCompare(a.backOrder)
+          );
+          if (filterStateBackorder === 'Asc') {
+            setFilterStateBackorder("Dsc");
+          }
+          if (filterStateBackorder === 'Dsc') {
+            setFilterStateBackorder("Asc");
+          }
+          break;
       case "Verkooporder":
         filteredData = [...orderX].sort(filterStateOrderNum === 'Asc'
           ? (a, b) => a.orderNumber.localeCompare(b.orderNumber)
@@ -461,16 +477,22 @@ function Orders({
         }
         break;
       case "Leverdatum":
-        filteredData = [...orderX].sort(filterStateLeverdatum === 'Asc'
-          ? (a, b) => new Date(a.deliveryDate) - new Date(b.deliveryDate)
-          : (a, b) => new Date(b.deliveryDate) - new Date(a.deliveryDate)
+        filteredData = [...orderX].sort((a, b) => {
+          const dateA = a.deliveryDate ? new Date(a.deliveryDate) : null;
+          const dateB = b.deliveryDate ? new Date(b.deliveryDate) : null;
+
+          if (!dateA && !dateB) return 0;
+          if (!dateA) return filterStateLeverdatum === 'Asc' ? 1 : -1;
+          if (!dateB) return filterStateLeverdatum === 'Asc' ? -1 : 1;
+
+          return filterStateLeverdatum === 'Asc'
+            ? dateA - dateB
+            : dateB - dateA;
+        });
+
+        setFilterStateLeverdatum(
+          filterStateLeverdatum === 'Asc' ? 'Dsc' : 'Asc'
         );
-        if (filterStateLeverdatum === 'Asc') {
-          setFilterStateLeverdatum("Dsc");
-        }
-        if (filterStateLeverdatum === 'Dsc') {
-          setFilterStateLeverdatum("Asc");
-        }
         break;
       case "Gebruiker":
         filteredData = [...orderX].sort(filterStateGebruiker === 'Asc'
@@ -483,6 +505,23 @@ function Orders({
         if (filterStateGebruiker === 'Dsc') {
           setFilterStateGebruiker("Asc");
         }
+        break;
+      case "datumorder":
+        filteredData = [...orderX].sort((a, b) => {
+          const dateA = a.creationDate ? new Date(a.creationDate) : null;
+          const dateB = b.creationDate ? new Date(b.creationDate) : null;
+
+          if (!dateA && !dateB) return 0;
+          if (!dateA) return filterDatumOrder === 'Asc' ? 1 : -1;
+          if (!dateB) return filterDatumOrder === 'Asc' ? -1 : 1;
+
+          return filterDatumOrder === 'Asc'
+            ? dateA - dateB
+            : dateB - dateA;
+        });
+        setfilterDatumOrder(
+          filterDatumOrder === 'Asc' ? 'Dsc' : 'Asc'
+        );
         break;
       case "D":
         filteredData = orderX;
@@ -504,7 +543,7 @@ function Orders({
     const orderNumbersToFilter = filteredData
       .filter(item => item?.orderNumber)
       .map(item => item.orderNumber);
-    if (dep === "Naam" || dep === "Plaats" || dep === "Land" || dep === "Leverdatum" || dep === "Gebruiker") {
+    if (dep === "Backorder" || dep === "Naam" || dep === "Plaats" || dep === "Land" || dep === "Leverdatum" || dep === "Gebruiker" || dep === "datumorder") {
       const filteredAndParentItems = filteredData.filter(item =>
         orderNumbersToFilter.includes(item.orderNumber) && item.isParent === 1
       );
@@ -512,10 +551,8 @@ function Orders({
       setFilteredOrder(filteredAndParentItems);
     }
     else {
-      console.log("else");
-      console.log(orderNumbersToFilter);
       const filteredAndParentItems = order.filter(item =>
-        orderNumbersToFilter.includes(item.orderNumber) && item.isParent === 1
+        orderNumbersToFilter.includes(item.orderNumber)
       );
 
       setFilteredOrder(filteredAndParentItems);
@@ -1308,21 +1345,21 @@ function Orders({
 
               </DropdownItem>
             )}
-                        {dep === "SPU" && (
-            <DropdownItem
-              className="DropDown-Size"
-              onClick={() =>
-                printSpuExp(key)
-              }
-            >
-              
+            {dep === "SPU" && (
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSpuExp(key)
+                }
+              >
+
                 <li
                   style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
                 >
                   Print Spuiterij
                 </li>
-              
-            </DropdownItem>
+
+              </DropdownItem>
             )}
           </>
         );
@@ -1402,20 +1439,20 @@ function Orders({
               </DropdownItem>
             )}
             {dep === "SPU" && (
-            <DropdownItem
-              className="DropDown-Size"
-              onClick={() =>
-                printSpuExp(key)
-              }
-            >
-              
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSpuExp(key)
+                }
+              >
+
                 <li
                   style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
                 >
                   Print Spuiterij
                 </li>
-              
-            </DropdownItem>
+
+              </DropdownItem>
             )}
           </>
         );
@@ -1467,19 +1504,19 @@ function Orders({
               </DropdownItem>
             )}
             {dep === "SPU" && (
-            <DropdownItem
-              className="DropDown-Size"
-              onClick={() =>
-                printSpuExp(key)
-              }
-            >
+              <DropdownItem
+                className="DropDown-Size"
+                onClick={() =>
+                  printSpuExp(key)
+                }
+              >
                 <li
                   style={{ borderBottom: "2px solid #ccc", padding: "8px 0" }}
                 >
                   Print Spuiterij
                 </li>
-              
-            </DropdownItem>
+
+              </DropdownItem>
             )}
           </>
         );
@@ -1635,7 +1672,12 @@ function Orders({
               </div>
             </th>
             <th>Ordersoort</th>
-            <th>Backorder</th>
+            <th onClick={() => handleFilterClick("Backorder")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Backorder</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterStateBackorder === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
             <th style={{ overflow: "hidden" }}>
               <Dropdown isOpen={smeDropDownOpen} toggle={toggleSmeDropDown}>
                 <DropdownToggle data-toggle="dropdown" tag="span">
@@ -2055,7 +2097,12 @@ function Orders({
               </div>
             </th>
             <th>Referentie</th>
-            <th>Datum order</th>
+            <th onClick={() => handleFilterClick("datumorder")}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>Datum order</span>
+                <FontAwesomeIcon icon={faFilter} style={{ marginTop: '5px', color: filterDatumOrder === "Asc" ? 'black' : '#7E8D85' }} />
+              </div>
+            </th>
             <th onClick={() => handleFilterClick("Gebruiker")}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <span>Gebruiker (L)</span>
@@ -2510,7 +2557,7 @@ function Orders({
                             </tr>
                           </thead>
                           <tbody>
-                            {filteredOrder.map(
+                            {filteredOrder.sort((a, b) => a.regel - b.regel).map(
                               (itemC, key) =>
                                 item.orderNumber === itemC.orderNumber &&
                                 item.isParent === 1 && (
