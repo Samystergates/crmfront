@@ -2176,7 +2176,7 @@ function Orders({
                             }}
                             className="dropdown-header"
                           >
-                            Order: {item.orderNumber}
+                            Order: {item.orderNumber+item.regel}
                           </DropdownItem>
 
                           {item.orderType === "LAS" &&
@@ -2614,7 +2614,7 @@ function Orders({
                                             }}
                                             className="dropdown-header"
                                           >
-                                            Order: {itemC.orderNumber},{" "}
+                                            Order: {itemC.orderNumber+itemC.regel},{" "}
                                             {itemC.product}
                                           </DropdownItem>
                                           {renderDropdownItems(
