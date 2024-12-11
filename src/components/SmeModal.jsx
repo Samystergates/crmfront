@@ -49,7 +49,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
       setEntry({
         ...entry,
         orderNumber: currSme?.orderNumber,
-        prodNumber: currSme?.product,
+        regel: currSme?.regel,
       });
       setLoadedEntry(!loadedEntry);
     }
@@ -69,7 +69,7 @@ function SmeModal({ smePanelModal, toggleSmeFlowMod, currSme, toggleFlow }) {
       setEntry({
         ...selectedEntry,
         orderNumber: currSme?.orderNumber,
-        prodNumber: currSme?.product,
+        regel: currSme?.regel,
       });
       setSelectedDoorgezet(selectedEntry?.doorgezet);
       setSelectedVerstevigingsringen(selectedEntry?.verstevigingsringen);

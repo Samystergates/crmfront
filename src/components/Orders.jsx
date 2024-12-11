@@ -92,6 +92,7 @@ function Orders({
   const flowHalt = useRef("HLT");
   const orderNumberForNote = useRef("");
   const prodNumberForNote = useRef("");
+  const regelForNote = useRef("");
   const flowDepName = useRef(null);
   const StatusDepName = useRef(null);
   const [note, setNote] = useState("");
@@ -679,9 +680,9 @@ function Orders({
     toggle();
   };
 
-  const toggleNoteModal = (odaNum, prdNum) => {
+  const toggleNoteModal = (odaNum, regel) => {
     orderNumberForNote.current = odaNum;
-    prodNumberForNote.current = prdNum;
+    regelForNote.current = regel;
     setNoteModal(!noteModal);
   };
 
@@ -690,7 +691,7 @@ function Orders({
 
     toggleBOFlow(
       orderNumberForNote.current,
-      prodNumberForNote.current,
+      regelForNote.current,
       "EXCBO",
       "JA",
       note,
@@ -887,16 +888,16 @@ function Orders({
     }
   };
 
-  const toggleTooltip = (orderNumber, product) => {
+  const toggleTooltip = (orderNumber, regel) => {
     setTooltipOpen((prev) => ({
       ...prev,
-      [`${orderNumber}-${product}`]: !prev[`${orderNumber}-${product}`],
+      [`${orderNumber}-${regel}`]: !prev[`${orderNumber}-${regel}`],
     }));
   };
 
-  const toggleBOFlow = (onum, opd, dep, currStatus, noteExc, flowVal) => {
+  const toggleBOFlow = (onum, or, dep, currStatus, noteExc, flowVal) => {
     const updatedOrderList = orderX.map((items) => {
-      if (items.orderNumber === onum && items.product === opd) {
+      if (items.orderNumber === onum && items.regel === or) {
         return {
           ...items,
           exclamation: currStatus,
@@ -909,7 +910,7 @@ function Orders({
     updatingOrdersColor(
       true,
       updatedOrderList.find(
-        (item) => item.orderNumber === onum && item.product === opd
+        (item) => item.orderNumber === onum && item.regel === or
       ), dep
     );
   };
@@ -1208,10 +1209,10 @@ function Orders({
     }
   };
 
-  const handleColClick = (productNum) => {
+  const handleColClick = (regel) => {
     setRowDropDownOpen((prevState) => {
       const updatedState = [...prevState];
-      updatedState[productNum] = !prevState[productNum];
+      updatedState[regel] = !prevState[regel];
       return updatedState;
     });
   };
@@ -2118,7 +2119,7 @@ function Orders({
               <React.Fragment key={`${item.id},${index}`}>
                 {item.isParent === 1 && (
                   <tr
-                    key={`${item.orderNumber},${item.product}`}
+                    key={`${item.orderNumber},${item.regel}`}
                     onClick={(e) => {
                       handleColClickMain(item.orderNumber);
                       e.stopPropagation();
@@ -2184,7 +2185,7 @@ function Orders({
                               "EXP",
                               item.id,
                               item.orderNumber,
-                              `${item.orderNumber},${item.product}`,
+                              `${item.orderNumber},${item.regel}`,
                               item.exp
                             )}
                           {item.orderType === "LSO" &&
@@ -2192,7 +2193,7 @@ function Orders({
                               "SER",
                               item.id,
                               item.orderNumber,
-                              `${item.orderNumber},${item.product}`,
+                              `${item.orderNumber},${item.regel}`,
                               item.ser
                             )}
                           {item.orderType === "MAO" && (
@@ -2201,14 +2202,14 @@ function Orders({
                                 "MONLB",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monLb
                               )}
                               {renderDropdownItems(
                                 "EXP",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.exp
                               )}
                             </>
@@ -2220,7 +2221,7 @@ function Orders({
                                 "MONLB",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monLb
                               )}
                             </>
@@ -2231,7 +2232,7 @@ function Orders({
                                 "MWE",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.mwe
                               )}
                             </>
@@ -2242,14 +2243,14 @@ function Orders({
                                 "MONLB",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monLb
                               )}
                               {renderDropdownItems(
                                 "SER",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.ser
                               )}
                             </>
@@ -2260,7 +2261,7 @@ function Orders({
                                 "MONTR",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monTr
                               )}
                             </>
@@ -2271,14 +2272,14 @@ function Orders({
                                 "MONTR",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monTr
                               )}
                               {renderDropdownItems(
                                 "SER",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.ser
                               )}
                             </>
@@ -2289,7 +2290,7 @@ function Orders({
                                 "EXP",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.exp
                               )}
                             </>
@@ -2299,7 +2300,7 @@ function Orders({
                               "SER",
                               item.id,
                               item.orderNumber,
-                              `${item.orderNumber},${item.product}`,
+                              `${item.orderNumber},${item.regel}`,
                               item.ser
                             )}
                           {item.orderType === "MAP" && (
@@ -2308,14 +2309,14 @@ function Orders({
                                 "MONLB",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monLb
                               )}
                               {renderDropdownItems(
                                 "EXP",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.exp
                               )}
                             </>
@@ -2326,7 +2327,7 @@ function Orders({
                                 "MONLB",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monLb
                               )}
                             </>
@@ -2337,7 +2338,7 @@ function Orders({
                                 "MWE",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.mwe
                               )}
                             </>
@@ -2348,14 +2349,14 @@ function Orders({
                                 "MONLB",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monLb
                               )}
                               {renderDropdownItems(
                                 "SER",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.ser
                               )}
                             </>
@@ -2366,7 +2367,7 @@ function Orders({
                                 "MONLB-PRINT",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.mwe
                               )}
                             </>
@@ -2377,14 +2378,14 @@ function Orders({
                                 "MONTR",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monTr
                               )}
                               {renderDropdownItems(
                                 "SER",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.ser
                               )}
                             </>
@@ -2395,7 +2396,7 @@ function Orders({
                                 "MONTR",
                                 item.id,
                                 item.orderNumber,
-                                `${item.orderNumber},${item.product}`,
+                                `${item.orderNumber},${item.regel}`,
                                 item.monTr
                               )}
                             </>
@@ -2412,7 +2413,7 @@ function Orders({
                                 onClick={() =>
                                   toggleNoteModal(
                                     item.orderNumber,
-                                    item.product
+                                    item.regel
                                   )
                                 }
                               >
@@ -2435,7 +2436,7 @@ function Orders({
                                 onClick={() =>
                                   toggleBOFlow(
                                     item.orderNumber,
-                                    item.product,
+                                    item.regel,
                                     "EXCBO",
                                     "NEE",
                                     flowReverse
@@ -2479,11 +2480,11 @@ function Orders({
                       {orderX.find(
                         (entry) =>
                           entry.orderNumber === item.orderNumber &&
-                          entry.product === item.product
+                          entry.regel === item.regel
                       )?.exclamation === "JA" && (
                           <div
                             style={{ color: "yellow", display: "inline-block" }}
-                            id={`icon-${item.orderNumber}-${item.product}`}
+                            id={`icon-${item.orderNumber}-${item.regel}`}
                           >
                             <FontAwesomeIcon
                               icon={faExclamationTriangle}
@@ -2492,27 +2493,27 @@ function Orders({
                                 color: "black",
                               }}
                               onMouseOver={() =>
-                                toggleTooltip(item.orderNumber, item.product)
+                                toggleTooltip(item.orderNumber, item.regel)
                               }
                               onMouseOut={() =>
-                                toggleTooltip(item.orderNumber, item.product)
+                                toggleTooltip(item.orderNumber, item.regel)
                               }
                             />
                             <Tooltip
                               placement="bottom"
                               isOpen={
-                                tooltipOpen[`${item.orderNumber}-${item.product}`]
+                                tooltipOpen[`${item.orderNumber}-${item.regel}`]
                               }
-                              target={`icon-${item.orderNumber}-${item.product}`}
+                              target={`icon-${item.orderNumber}-${item.regel}`}
                               toggle={() =>
-                                toggleTooltip(item.orderNumber, item.product)
+                                toggleTooltip(item.orderNumber, item.regel)
                               }
                             >
                               {
                                 orderX.find(
                                   (entry) =>
                                     entry.orderNumber === item.orderNumber &&
-                                    entry.product === item.product
+                                    entry.regel === item.regel
                                 ).excNote
                               }
                             </Tooltip>
@@ -2562,9 +2563,9 @@ function Orders({
                                 item.orderNumber === itemC.orderNumber &&
                                 item.isParent === 1 && (
                                   <tr
-                                    key={`${itemC.orderNumber},${itemC.product}`}
+                                    key={`${itemC.orderNumber},${itemC.regel}`}
                                     onClick={(e) => {
-                                      handleColClick(itemC.product);
+                                      handleColClick(itemC.regel);
                                       e.stopPropagation();
                                     }}
                                   >
@@ -2594,9 +2595,9 @@ function Orders({
                                     </td>
                                     <td>
                                       <Dropdown
-                                        isOpen={rowDropDownOpen[itemC.product]}
+                                        isOpen={rowDropDownOpen[itemC.regel]}
                                         toggle={() => {
-                                          handleColClick(itemC.product);
+                                          handleColClick(itemC.regel);
                                         }}
                                       >
                                         <DropdownToggle
@@ -2615,31 +2616,31 @@ function Orders({
                                             className="dropdown-header"
                                           >
                                             Order: {itemC.orderNumber},{" "}
-                                            {itemC.product}
+                                            {itemC.regel}
                                           </DropdownItem>
                                           {renderDropdownItems(
                                             "SME",
                                             itemC.id,
                                             itemC.orderNumber,
-                                            `${itemC.orderNumber},${itemC.product}`,
+                                            `${itemC.orderNumber},${itemC.regel}`,
                                             itemC?.sme
                                           )}
                                           {renderDropdownItems(
                                             "SPU",
                                             itemC.id,
                                             itemC.orderNumber,
-                                            `${itemC.orderNumber},${itemC.product}`,
+                                            `${itemC.orderNumber},${itemC.regel}`,
                                             itemC?.spu
                                           )}
 
                                           {stickers.some(
                                             (item) =>
-                                              item.product === itemC.product
+                                              item.regel === itemC.regel
                                           ) && (
                                               <DropdownItem
                                                 className="DropDown-Size"
                                                 onClick={() =>
-                                                  printingSticker(itemC.product)
+                                                  printingSticker(itemC.regel)
                                                 }
                                               >
                                                 <li
@@ -2656,7 +2657,7 @@ function Orders({
                                         </DropdownMenu>
                                       </Dropdown>
                                     </td>
-                                    <td>{itemC.product}</td>
+                                    <td>{itemC.regel}</td>
                                     <td>{itemC.omsumin}</td>
                                     <td>{itemC.deliveryDate}</td>
                                     <td>{itemC.user}</td>

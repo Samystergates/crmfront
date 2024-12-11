@@ -331,7 +331,7 @@ useEffect(() => {
                                 item.orderNumber === itemC.orderNumber &&
                                 item.isParent === 1 && (
                                   <tr
-                                    key={`${itemC.orderNumber},${itemC.product}`}
+                                    key={`${itemC.orderNumber},${itemC.regel}`}
                                   >
                 <td>{itemC.regel}</td>
                 <td>

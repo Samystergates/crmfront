@@ -59,7 +59,7 @@ function Print({ printPanelModal, togglePrintFlowMod, orderX }) {
     const uniqueMergedOrders = mergedOrders.filter((order) => {
       const key = JSON.stringify({
         orderNumber: order?.orderNumber,
-        product: order?.product,
+        regel: order?.regel,
       });
 
       if (!uniqueOrdersSet.has(key)) {
@@ -80,7 +80,7 @@ function Print({ printPanelModal, togglePrintFlowMod, orderX }) {
           data.some(
             (dataItem) =>
               order.orderNumber === dataItem.orderNumber &&
-              order.product === dataItem.prodNumber
+              order.regel === dataItem.regel
           )
         );
         setSmeOrders(filteredOrders);
@@ -97,7 +97,7 @@ function Print({ printPanelModal, togglePrintFlowMod, orderX }) {
           data.some(
             (dataItem) =>
               order.orderNumber === dataItem.orderNumber &&
-              order.product === dataItem.prodNumber
+              order.regel === dataItem.regel
           )
         );
         setSpuOrders(filteredOrders);
@@ -146,7 +146,7 @@ function Print({ printPanelModal, togglePrintFlowMod, orderX }) {
   function printFunc(dep) {
     const foundOrder = orderY.find((order) => order.id == selectedOrderId);
 
-    const key = `${foundOrder?.orderNumber},${foundOrder?.product}`;
+    const key = `${foundOrder?.orderNumber},${foundOrder?.regel}`;
     if (foundOrder) {
     if (dep === "TRA") {
       if (foundOrder?.tra !== "" && foundOrder?.tra !== null) {
@@ -156,12 +156,12 @@ function Print({ printPanelModal, togglePrintFlowMod, orderX }) {
     }
     if (dep === "SME") {
       if (foundOrder?.sme !== "" && foundOrder?.sme !== null) {
-        printSme(foundOrder?.orderNumber+","+foundOrder?.product);
+        printSme(foundOrder?.orderNumber+","+foundOrder?.regel);
       }
     }
     if (dep === "SPU") {
       if (foundOrder?.spu !== "" && foundOrder?.spu !== null) {
-        printSpu(foundOrder?.orderNumber+","+foundOrder?.product);
+        printSpu(foundOrder?.orderNumber+","+foundOrder?.regel);
       }
     }
     if (dep === "MON") {
@@ -220,7 +220,7 @@ function Print({ printPanelModal, togglePrintFlowMod, orderX }) {
             </option>
             {orderY.map((order) => (
               <option key={order?.id} value={order?.id}>
-                {`${order?.orderNumber} - ${order?.product}`}
+                {`${order?.orderNumber} - ${order?.regel}`}
               </option>
             ))}
           </select>

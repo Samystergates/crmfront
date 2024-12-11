@@ -51,7 +51,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
       setFinalEntry({
         ...finalEntry,
         orderNumber: currSpu?.orderNumber,
-        prodNumber: currSpu?.product,
+        regel: currSpu?.regel,
       });
       setLoadedEntry(!loadedEntry);
     }
@@ -860,6 +860,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
                             ...prevFinalEntry,
                             orderNumber: currSpu?.orderNumber,
                             prodNumber: currSpu?.product,
+                            regel: currSpu?.regel,
                             ralCode: `${selectedObject?.red || 0},${
                               selectedObject?.green || 0
                             },${selectedObject?.blue || 0}`,
@@ -913,6 +914,7 @@ function SmeModal({ spuPanelModal, toggleSpuFlowMod, currSpu, toggleFlow }) {
                             ...prevFinalEntry,
                             orderNumber: currSpu?.orderNumber,
                             prodNumber: currSpu?.product,
+                            regel: currSpu?.regel,
                             ralCode: `${selectedObject?.red || 0},${
                               selectedObject?.green || 0
                             },${selectedObject?.blue || 0}`,
