@@ -1246,38 +1246,38 @@ function Orders({
       }
       const statusCode = orderDep?.[StatusDepName.current];
 
-      if (checkedStates[oNm]) {
-        return (
-          <DropdownItem
-            className="DropDown-Size"
-            style={{ color: "#ccc", pointerEvents: "none" }}
-            onClick={() => initToggleFlow(key, oId, dep, StatusDepName.current)}
-          >
-            {dep === "SME" && (
-              <li
-                style={{
-                  pointerEvents: "none",
-                  borderBottom: "2px solid #ccc",
-                  padding: "8px 0",
-                }}
-              >
-                Setup Smederij order
-              </li>
-            )}
-            {dep === "SPU" && (
-              <li
-                style={{
-                  pointerEvents: "none",
-                  borderBottom: "2px solid #ccc",
-                  padding: "8px 0",
-                }}
-              >
-                Setup Spuiterij order
-              </li>
-            )}
-          </DropdownItem>
-        );
-      }
+      // if (checkedStates[oNm]) {
+      //   return (
+      //     <DropdownItem
+      //       className="DropDown-Size"
+      //       style={{ color: "#ccc", pointerEvents: "none" }}
+      //       onClick={() => initToggleFlow(key, oId, dep, StatusDepName.current)}
+      //     >
+      //       {dep === "SME" && (
+      //         <li
+      //           style={{
+      //             pointerEvents: "none",
+      //             borderBottom: "2px solid #ccc",
+      //             padding: "8px 0",
+      //           }}
+      //         >
+      //           Setup Smederij order
+      //         </li>
+      //       )}
+      //       {dep === "SPU" && (
+      //         <li
+      //           style={{
+      //             pointerEvents: "none",
+      //             borderBottom: "2px solid #ccc",
+      //             padding: "8px 0",
+      //           }}
+      //         >
+      //           Setup Spuiterij order
+      //         </li>
+      //       )}
+      //     </DropdownItem>
+      //   );
+      // }
       if (statusCode === "") {
         return (
           <>
@@ -2657,7 +2657,7 @@ function Orders({
                                         </DropdownMenu>
                                       </Dropdown>
                                     </td>
-                                    <td>{itemC.regel}</td>
+                                    <td>{itemC.product}</td>
                                     <td>{itemC.omsumin}</td>
                                     <td>{itemC.deliveryDate}</td>
                                     <td>{itemC.user}</td>
