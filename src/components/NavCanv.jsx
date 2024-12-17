@@ -8,8 +8,9 @@ import ZoekKleur from "./ZoekKleur";
 import ZoekMachine from "./ZoekMachine";
 import ZoekLabel from "./ZoekLabel";
 import Print from "./Print";
+import { handleDownload } from "../services/order-service";
 
-function NavCanv({ isMoreOptionsCanv, moreOptionsCanv, updateForTra, orderX , toggleFlowTra, stickers,loadAllOrdersStickers}) {
+function NavCanv({ isMoreOptionsCanv, moreOptionsCanv, updateForTra, orderX, toggleFlowTra, stickers, loadAllOrdersStickers }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [user, setUser] = useState(null);
   const [login, setLogin] = useState(null);
@@ -19,6 +20,7 @@ function NavCanv({ isMoreOptionsCanv, moreOptionsCanv, updateForTra, orderX , to
   const [zLPanelModal, setZLPanelModal] = useState(false);
   const [printPanelModal, setPrintPanelModal] = useState(false);
   const [orderY, setOrderY] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setUser(getCurrentUserDetail());
@@ -46,6 +48,18 @@ function NavCanv({ isMoreOptionsCanv, moreOptionsCanv, updateForTra, orderX , to
   };
   const togglePrintFlowMod = () => {
     setPrintPanelModal(!printPanelModal);
+  };
+
+
+  const downloadExcelFile = async () => {
+    setLoading(true);
+    try {
+      await handleDownload();
+    } catch (error) {
+      console.error('Error while downloading:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getNextWorkingDay = () => {
@@ -121,6 +135,23 @@ function NavCanv({ isMoreOptionsCanv, moreOptionsCanv, updateForTra, orderX , to
             />
           </span>
         </div>
+        {/* <div onClick={downloadExcelFile} className="nav-item-OffC">
+          <span>
+            Download Excel Sheet
+          </span>
+        </div> */}
+         <div>
+      <div onClick={downloadExcelFile} className="nav-item-OffC">
+        <span>
+          {loading ? 'Downloading, please wait...' : 'Download Excel Sheet'}
+        </span>
+      </div>
+      {loading && (
+        <div className="loader">
+          {/* You can replace this text with a spinner */}
+        </div>
+      )}
+    </div>
       </OffcanvasBody>
     </Offcanvas>
   );
